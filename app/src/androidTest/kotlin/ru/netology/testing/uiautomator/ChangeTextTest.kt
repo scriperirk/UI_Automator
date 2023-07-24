@@ -24,6 +24,7 @@ class ChangeTextTest {
 
     private lateinit var device: UiDevice
     private val textToSet = "Netology"
+    private val textToSetEmpty  = " "
 
 //    @Test
 //    fun testInternetSettings() {
@@ -110,6 +111,20 @@ class ChangeTextTest {
         assertEquals(result, textToSet)
     }
 
+    @Test
+    fun testEmptyText() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+        val firstResult = device.findObject(By.res(packageName, "textToBeChanged")).text
+        device.findObject(By.res(packageName, "userInput")).text = textToSetEmpty
+        device.findObject(By.res(packageName, "buttonChange")).click()
+
+        val nextResult = device.findObject(By.res(packageName, "textToBeChanged")).text
+        assertEquals(nextResult, firstResult)
+
+        Thread.sleep(5000)
+    }
 }
 
 
